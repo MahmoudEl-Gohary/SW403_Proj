@@ -9,6 +9,7 @@ from src.config import settings
 from src.loaders import load_python_files
 from src.chunking import get_chunker
 from src.retrieval import RetrievalPipeline
+from src.agents import create_rag_agent
 
 from .models import ChunkingStrategy
 
@@ -55,6 +56,35 @@ class RAGService:
         self.indexed_files[key].extend(file_paths)
         
         return len(docs), len(doc_ids)
+    
+    def query_with_agent(
+        self,
+        query: str,
+        strategy: ChunkingStrategy,
+        k: int = 3
+    ) -> tuple[str, list[Document]]:
+        """Query using the RAG agent."""
+        pipeline = self.get_or_create_pipeline(strategy)
+        
+        # Temporarily set k
+        original_k = settings.RETRIEVAL_K
+        settings.RETRIEVAL_K = k
+        
+        # initiating and running agents
+        retrieval_tool = pipeline.create_retrieval_tool()
+        agent = create_rag_agent(tools=[retrieval_tool])
+        
+        messages = [{"role": "user", "content": query}]
+        result = agent.invoke({"messages": messages})
+        
+        # Restore original k because every time we change it, it is changed globally
+        settings.RETRIEVAL_K = original_k
+        
+        # Extract answer and get retrieved docs
+        answer = result["messages"][-1].content
+        retrieved_docs = pipeline.search(query, k=k)
+        
+        return answer, retrieved_docs
 
 
 rag_service = RAGService()

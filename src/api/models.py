@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
 
+# model config parameters are to enhance fastAPI's documentation
 
 class ChunkingStrategy(str, Enum):
     """Available chunking strategies."""
@@ -34,7 +35,6 @@ class IndexRequest(BaseModel):
         }
     }
 
-
 class IndexResponse(BaseModel):
     """Response model for indexing."""
     success: bool = Field(..., description="Whether indexing was successful")
@@ -43,12 +43,55 @@ class IndexResponse(BaseModel):
     num_chunks: int = Field(default=0, description="Number of chunks created")
     strategy_used: ChunkingStrategy = Field(..., description="Chunking strategy used")
 
+class QueryRequest(BaseModel):
+    """Request model for querying the RAG system."""
+    query: str = Field(..., description="The question to ask")
+    strategy: ChunkingStrategy = Field(
+        default=ChunkingStrategy.CODE,
+        description="Chunking strategy to use for retrieval"
+    )
+    k: int = Field(
+        default=3,
+        ge=1,
+        le=10,
+        description="Number of documents to retrieve"
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "query": "What classes are defined in the code?",
+                    "strategy": "ast",
+                    "k": 3
+                }
+            ]
+        }
+    }
+
+class ChunkInfo(BaseModel):
+    """Information about a retrieved chunk."""
+    content: str = Field(..., description="The chunk content")
+    source: str = Field(default="", description="Source file")
+    chunk_type: Optional[str] = Field(default=None, description="Type of chunk (function, class, etc.)")
+    start_line: Optional[int] = Field(default=None, description="Start line in source file")
+    end_line: Optional[int] = Field(default=None, description="End line in source file")
+    name: Optional[str] = Field(default=None, description="Name of function/class if applicable")
+
+class QueryResponse(BaseModel):
+    """Response model for queries."""
+    answer: str = Field(..., description="Generated answer from the LLM")
+    retrieved_chunks: list[ChunkInfo] = Field(
+        default_factory=list,
+        description="Retrieved context chunks used to generate the answer"
+    )
+    strategy_used: ChunkingStrategy = Field(..., description="Chunking strategy that was used")
+    num_chunks: int = Field(..., description="Number of chunks retrieved")
 
 class HealthResponse(BaseModel):
     """Health check response."""
     status: str = Field(default="healthy")
     version: str = Field(default="0.1.0")
-
 
 class ErrorResponse(BaseModel):
     """Error response model."""

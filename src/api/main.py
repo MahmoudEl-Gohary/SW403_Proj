@@ -10,7 +10,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from .models import HealthResponse, IndexRequest, IndexResponse
+from .models import (
+    HealthResponse,
+    IndexRequest,
+    IndexResponse,
+    QueryRequest,
+    QueryResponse,
+    ChunkInfo,
+)
 from .service import rag_service
 
 
@@ -72,5 +79,37 @@ async def index_files(request: IndexRequest):
         )
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/query", response_model=QueryResponse, tags=["Query"])
+async def query(request: QueryRequest):
+    """Query the indexed codebase using the RAG agent."""
+    try:
+        answer, retrieved_docs = rag_service.query_with_agent(
+            query=request.query,
+            strategy=request.strategy,
+            k=request.k,
+        )
+        
+        # Convert retrieved docs to ChunkInfo
+        chunks = []
+        for doc in retrieved_docs:
+            chunks.append(ChunkInfo(
+                content=doc.page_content,
+                source=doc.metadata.get("source", ""),
+                chunk_type=doc.metadata.get("chunk_type"),
+                start_line=doc.metadata.get("start_line"),
+                end_line=doc.metadata.get("end_line"),
+                name=doc.metadata.get("name"),
+            ))
+        
+        return QueryResponse(
+            answer=answer,
+            retrieved_chunks=chunks,
+            strategy_used=request.strategy,
+            num_chunks=len(chunks),
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

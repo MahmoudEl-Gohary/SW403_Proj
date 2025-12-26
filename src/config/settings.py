@@ -29,7 +29,7 @@ class Settings:
 
     # Chunking Configuration
     # Options: "recursive", "code", "ast"
-    CHUNKING_STRATEGY: str = "code"
+    CHUNKING_STRATEGY: str = "recursive"
     
     # Retrieval Mode: "vector" or "graph"
     RETRIEVAL_MODE: str = "vector"

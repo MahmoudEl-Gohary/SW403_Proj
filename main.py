@@ -40,7 +40,6 @@ def main():
     retrieval_tool = pipeline.create_retrieval_tool()
     agent = create_rag_agent(tools=[retrieval_tool])
     
-    
     # 5. Run query
     query = (
         "What classes and functions are defined in the code?\n\n"

@@ -19,7 +19,7 @@ def main():
     
     # 1. Load Python files from data folder
     print("Loading documents...")
-    docs = load_python_files(["data/simple_test_case.py"])
+    docs = load_python_files(["data/"])
     print(f"Loaded {len(docs)} document(s), {len(docs[0].page_content)} characters")
     
     # 2. Initialize retrieval pipeline with chunking strategy

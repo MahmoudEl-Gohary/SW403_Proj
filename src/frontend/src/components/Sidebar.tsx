@@ -1,8 +1,8 @@
-import { Info, ChevronDown, ChevronRight } from 'lucide-react';
+import { Info, ChevronDown, ChevronRight, Upload } from 'lucide-react';
 import { useState } from 'react';
 
-// Simplified types for the API-supported options
-export type ChunkingStrategy = 'recursive' | 'code' | 'ast' | 'graphrag';
+// P1-P4 strategy types matching the backend
+export type ChunkingStrategy = 'function' | 'ast' | 'context' | 'graph';
 
 interface SidebarProps {
   strategy: ChunkingStrategy;
@@ -10,13 +10,15 @@ interface SidebarProps {
   topK: number;
   onTopKChange: (k: number) => void;
   onSave: () => void;
+  onUpload: (file: File) => void;
+  isUploading: boolean;
 }
 
 const strategies = [
-  { value: 'recursive' as const, label: 'Recursive', description: 'Simple text chunking with overlap', disabled: false },
-  { value: 'code' as const, label: 'Code', description: 'Language-aware code splitting', disabled: false },
-  { value: 'ast' as const, label: 'AST', description: 'Syntax-aware code splitting using AST', disabled: false },
-  { value: 'graphrag' as const, label: 'GraphRAG', description: 'Graph-based knowledge retrieval', disabled: false },
+  { value: 'function' as const, label: 'P1: Function', description: 'Function-level baseline chunking', disabled: false },
+  { value: 'ast' as const, label: 'P2: cAST', description: 'Syntax-aware code splitting using AST', disabled: false },
+  { value: 'context' as const, label: 'P3: Context', description: 'Context-enriched chunking with positioning', disabled: false },
+  { value: 'graph' as const, label: 'P4: GraphRAG', description: 'Graph-based knowledge retrieval', disabled: false },
 ];
 
 function CollapsibleSection({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
@@ -57,6 +59,8 @@ export function Sidebar({
   topK,
   onTopKChange,
   onSave,
+  onUpload,
+  isUploading,
 }: SidebarProps) {
   return (
     <aside className="w-80 bg-gray-900 border-r border-gray-800 flex flex-col overflow-hidden">
@@ -109,6 +113,39 @@ export function Sidebar({
                 className="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Upload Codebase" defaultOpen={false}>
+          <div className="space-y-3">
+            <p className="text-xs text-gray-400">
+              Upload a .zip file containing Python source code to index.
+            </p>
+            <label className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
+              <Upload className="w-4 h-4 text-gray-400" />
+              <span className="text-sm text-gray-300">
+                {isUploading ? 'Indexing...' : 'Choose .zip file'}
+              </span>
+              <input
+                type="file"
+                accept=".zip"
+                disabled={isUploading}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    onUpload(file);
+                    e.target.value = '';
+                  }
+                }}
+                className="hidden"
+              />
+            </label>
+            {isUploading && (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm text-blue-400">Processing...</span>
+              </div>
+            )}
           </div>
         </CollapsibleSection>
       </div>

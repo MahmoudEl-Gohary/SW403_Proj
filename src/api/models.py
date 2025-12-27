@@ -12,9 +12,6 @@ class ChunkingStrategy(str, Enum):
     AST = "ast"             # P2: cAST
     CONTEXT = "context"     # P3: Context-enriched
     GRAPH = "graph"         # P4: GraphRAG
-    # Legacy
-    RECURSIVE = "recursive"
-    CODE = "code"
 
 
 class IndexRequest(BaseModel):
@@ -24,7 +21,7 @@ class IndexRequest(BaseModel):
         description="List of file paths to index"
     )
     strategy: ChunkingStrategy = Field(
-        default=ChunkingStrategy.CODE,
+        default=ChunkingStrategy.FUNCTION,
         description="Chunking strategy to use"
     )
 
@@ -51,7 +48,7 @@ class QueryRequest(BaseModel):
     """Request model for querying the RAG system."""
     query: str = Field(..., description="The question to ask")
     strategy: ChunkingStrategy = Field(
-        default=ChunkingStrategy.CODE,
+        default=ChunkingStrategy.FUNCTION,
         description="Chunking strategy to use for retrieval"
     )
     k: int = Field(
@@ -60,6 +57,10 @@ class QueryRequest(BaseModel):
         le=10,
         description="Number of documents to retrieve"
     )
+    collection: Optional[str] = Field(
+        default=None,
+        description="ChromaDB collection name to query. If not provided, uses default collection."
+    )
 
     model_config = {
         "json_schema_extra": {
@@ -67,7 +68,8 @@ class QueryRequest(BaseModel):
                 {
                     "query": "What classes are defined in the code?",
                     "strategy": "ast",
-                    "k": 3
+                    "k": 3,
+                    "collection": "my_project_recursive_gemma2_9b_it"
                 }
             ]
         }
@@ -119,3 +121,45 @@ class DatabasesResponse(BaseModel):
     """Response model for listing available databases."""
     databases: list[str] = Field(..., description="List of ChromaDB collection names")
     count: int = Field(..., description="Number of available databases")
+
+
+class UploadResponse(BaseModel):
+    """Response for zip file upload and indexing."""
+    success: bool = Field(..., description="Whether upload and indexing was successful")
+    message: str = Field(..., description="Status message")
+    num_documents: int = Field(default=0, description="Number of files extracted and indexed")
+    num_chunks: int = Field(default=0, description="Number of chunks created")
+    strategy_used: str = Field(..., description="Chunking strategy used")
+    collection_name: str = Field(..., description="ChromaDB collection name created")
+
+class SelfCheckRequest(BaseModel):
+    """Request model for hallucination self-check."""
+    query: str = Field(..., description="The original user query")
+    response: str = Field(..., description="The response to check for hallucinations")
+    collection: str = Field(..., description="ChromaDB collection name to use for generating the sampled response")
+    k: int = Field(
+        default=3,
+        ge=1,
+        le=10,
+        description="Number of documents to retrieve for the sampled response"
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "query": "What classes are defined in this code?",
+                    "response": "The code defines a UserService class.",
+                    "collection": "my_project_recursive_gemma2_9b_it",
+                    "k": 3
+                }
+            ]
+        }
+    }
+
+
+class SelfCheckResponse(BaseModel):
+    """Response model for hallucination self-check."""
+    is_hallucinating: bool = Field(..., description="True if hallucination detected")
+    similarity_score: float = Field(..., description="Cosine similarity between responses (0-1)")
+

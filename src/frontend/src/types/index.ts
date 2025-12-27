@@ -1,19 +1,6 @@
 export type RAGStrategy = 'P1' | 'P2' | 'P3' | 'P4' | 'hybrid';
 
-export type QueryComplexity = 'simple' | 'multi-step' | 'global';
-
 export type ResultTab = 'answer' | 'context' | 'reasoning' | 'graph';
-
-export interface RetrievalConfig {
-  topK: number;
-  contextWindow: number;
-  graphDepth: number;
-}
-
-export interface CostConfig {
-  tokenBudget: number;
-  latencyAccuracyTradeoff: boolean;
-}
 
 export interface QueryResult {
   strategy: RAGStrategy;
@@ -21,7 +8,6 @@ export interface QueryResult {
   context: CodeSnippet[];
   reasoning: ReasoningStep[];
   graph?: GraphNode[];
-  metrics: Metrics;
 }
 
 export interface CodeSnippet {
@@ -34,17 +20,9 @@ export interface CodeSnippet {
 }
 
 export interface ReasoningStep {
-  step: number;
+  similarityScore: number;
   description: string;
-  action: string;
-}
-
-export interface Metrics {
-  retrievalTime: number;
-  totalTokens: number;
-  estimatedCost: number;
-  relevanceScore: number;
-  detectedComplexity: QueryComplexity;
+  isHallucinating: boolean;
 }
 
 export interface GraphNode {

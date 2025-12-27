@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeftRight } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { Header } from './components/Header';
 import { Sidebar, ChunkingStrategy } from './components/Sidebar';
 import { QueryInput } from './components/QueryInput';
 import { ResultsPanel } from './components/ResultsPanel';
-import { MetricsPanel } from './components/MetricsPanel';
-import { ComparisonMode } from './components/ComparisonMode';
-import { QueryResult } from './types';
+import { QueryResult, ResultTab } from './types';
 
 const API_BASE = 'http://127.0.0.1:8000';
 
 function App() {
-  const [strategy, setStrategy] = useState<ChunkingStrategy>('code');
+  const [strategy, setStrategy] = useState<ChunkingStrategy>('function');
   const [topK, setTopK] = useState(3);
   const [isHealthy, setIsHealthy] = useState<boolean | null>(null);
   const [selectedDatabase, setSelectedDatabase] = useState<string | null>(null);
 
   const [query, setQuery] = useState('');
   const [currentResult, setCurrentResult] = useState<QueryResult | null>(null);
-  const [comparisonResults, setComparisonResults] = useState<QueryResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [comparisonMode, setComparisonMode] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSelfChecking, setIsSelfChecking] = useState(false);
+  const [activeTab, setActiveTab] = useState<ResultTab>('answer');
 
 
   useEffect(() => {
@@ -72,6 +71,7 @@ function App() {
     if (!query.trim()) return;
 
     setIsLoading(true);
+    setActiveTab('answer');
 
     try {
       const response = await fetch(`${API_BASE}/query`, {
@@ -80,7 +80,8 @@ function App() {
         body: JSON.stringify({
           query: query,
           strategy: strategy,
-          k: topK
+          k: topK,
+          collection: selectedDatabase
         })
       });
 
@@ -105,23 +106,88 @@ function App() {
           endLine: chunk.end_line || 0,
         })),
         reasoning: [],
-        metrics: {
-          retrievalTime: 0,
-          totalTokens: 0,
-          estimatedCost: 0,
-          relevanceScore: 0,
-          detectedComplexity: 'simple' as const,
-        }
       };
 
       setCurrentResult(result);
-      setComparisonResults([]);
     } catch (error) {
       console.error('Query error:', error);
     }
 
     setIsLoading(false);
   };
+
+  const handleSelfCheck = async () => {
+    if (!currentResult || !selectedDatabase) return;
+
+    setIsSelfChecking(true);
+
+    try {
+      const response = await fetch(`${API_BASE}/selfcheck`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: query,
+          response: currentResult.answer,
+          collection: selectedDatabase,
+          k: topK
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Self-check failed:', error);
+        setIsSelfChecking(false);
+        return;
+      }
+
+      const data = await response.json();
+
+      // Update the result with self-check reasoning
+      setCurrentResult({
+        ...currentResult,
+        reasoning: [{
+          similarityScore: data.similarity_score,
+          description: data.is_hallucinating
+            ? 'The sampled response differs significantly from the original answer, suggesting potential hallucination.'
+            : 'The sampled response is consistent with the original answer, indicating a reliable response.',
+          isHallucinating: data.is_hallucinating
+        }]
+      });
+
+      // Switch to the Self Check tab
+      setActiveTab('reasoning');
+    } catch (error) {
+      console.error('Self-check error:', error);
+    }
+
+    setIsSelfChecking(false);
+  };
+
+  const handleUpload = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch(`${API_BASE}/index/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Upload failed:', error.detail);
+      } else {
+        const data = await response.json();
+        console.log('Indexed:', data.message, 'Collection:', data.collection_name);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
+    setIsUploading(false);
+  };
+
+  const canSelfCheck = currentResult && selectedDatabase && !isLoading && !isSelfChecking;
 
   return (
     <div className="h-screen flex flex-col bg-gray-950">
@@ -138,6 +204,8 @@ function App() {
           topK={topK}
           onTopKChange={setTopK}
           onSave={handleUpdateSettings}
+          onUpload={handleUpload}
+          isUploading={isUploading}
         />
 
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -150,36 +218,27 @@ function App() {
 
           <div className="flex items-center justify-between px-6 py-3 bg-gray-900 border-b border-gray-800">
             <h2 className="text-sm font-semibold text-white">
-              {comparisonMode ? 'Comparison Results' : 'Query Results'}
+              Query Results
             </h2>
             <button
-              onClick={() => setComparisonMode(!comparisonMode)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${comparisonMode
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              onClick={handleSelfCheck}
+              disabled={!canSelfCheck}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${canSelfCheck
+                ? 'bg-purple-600 text-white hover:bg-purple-500'
+                : 'bg-gray-800 text-gray-500 cursor-not-allowed'
                 }`}
             >
-              <ArrowLeftRight className="w-4 h-4" />
-              {comparisonMode ? 'Single Mode' : 'Compare All'}
+              <ShieldCheck className="w-4 h-4" />
+              {isSelfChecking ? 'Checking...' : 'Self Check'}
             </button>
           </div>
 
-          {comparisonMode ? (
-            <div className="flex-1 overflow-y-auto">
-              <ComparisonMode
-                results={comparisonResults}
-                isLoading={isLoading}
-              />
-            </div>
-          ) : (
-            <>
-              <ResultsPanel
-                result={currentResult}
-                isLoading={isLoading}
-              />
-              {currentResult && <MetricsPanel metrics={currentResult.metrics} />}
-            </>
-          )}
+          <ResultsPanel
+            result={currentResult}
+            isLoading={isLoading}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
       </div>
     </div>

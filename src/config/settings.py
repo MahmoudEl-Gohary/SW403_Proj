@@ -42,7 +42,7 @@ class Settings:
     # Options: "function" (P1), "ast" (P2), "context" (P3), "graph" (P4)
     CHUNKING_STRATEGY: str = "function"
     
-    # Retrieval Mode: "vector" or "graph"
+    # Retrieval Mode: "vector" (P1-P3) or "graph" (P4)
     RETRIEVAL_MODE: str = "vector"
 
     # Recursive chunker settings
@@ -59,6 +59,7 @@ class Settings:
     BASE_DIR: Path = Path(__file__).parent.parent.parent
     DATA_DIR: Path = BASE_DIR / "data"
     VECTOR_DB_DIR: str = str(BASE_DIR / "chroma_db")
+    KUZU_DB_DIR: str = str(BASE_DIR / "kuzu_db")
 
     def __init__(self):
         # Set environment variables for LangChain/LangSmith

@@ -12,6 +12,8 @@ from src.loaders import load_python_files
 from src.chunking import get_chunker
 from src.retrieval import RetrievalPipeline
 from src.agents import create_rag_agent, run_agent
+from src.api.utils import load_system_prompt
+
 
 
 def main():
@@ -38,12 +40,13 @@ def main():
     # 4. Create agent with retrieval tool
     print("\nCreating RAG agent...")
     retrieval_tool = pipeline.create_retrieval_tool()
-    agent = create_rag_agent(tools=[retrieval_tool])
+    system_prompt = load_system_prompt("src/api/system_prompt.txt")
+    agent = create_rag_agent(tools=[retrieval_tool], system_prompt=system_prompt)
     
     # 5. Run query
     query = (
         "What classes and functions are defined in the code?\n\n"
-        "Describe the purpose of the Calculator class."
+        "Describe the purpose of the SampleClass class."
     )
     print(f"\nQuery: {query}\n")
     print("-" * 50)

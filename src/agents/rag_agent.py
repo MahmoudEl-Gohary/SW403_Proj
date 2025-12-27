@@ -2,19 +2,23 @@
 RAG Agent using LangGraph's create_agent.
 """
 
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langgraph.prebuilt import create_react_agent
 from langchain.agents import create_agent
 
 from src.config import settings
+from langchain_openai import ChatOpenAI
 
 
-def get_llm() -> ChatGroq:
+
+def get_llm() -> ChatOpenAI:
     """Initialize the LLM."""
-    return ChatGroq(
+    return ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY,
+        base_url="https://openrouter.ai/api/v1",
         model=settings.LLM_MODEL,
         temperature=settings.LLM_TEMPERATURE,
         max_tokens=None,
-        reasoning_format="parsed",
         timeout=None,
         max_retries=settings.LLM_MAX_RETRIES,
     )
@@ -38,7 +42,7 @@ def create_rag_agent(tools: list, system_prompt: str | None = None):
         "Use the tool to help answer user queries."
     )
     
-    return create_agent(llm, tools, system_prompt=prompt)
+    return create_react_agent(llm, tools, prompt=prompt)
 
 
 def run_agent(agent, query: str, stream: bool = True):

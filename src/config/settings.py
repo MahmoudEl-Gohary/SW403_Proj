@@ -25,9 +25,11 @@ class Settings:
     NEO4J_URI: str = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     NEO4J_USER: str = os.getenv("NEO4J_USER", "neo4j")
     NEO4J_PASSWORD: str = os.getenv("NEO4J_PASSWORD", "")
+    
+    OPENROUTER_API_KEY: str = os.getenv("OPENROUTER_API_KEY", "")
 
     # LLM Configuration
-    LLM_MODEL: str = "qwen/qwen3-32b"
+    LLM_MODEL: str = "google/gemini-2.5-flash-lite"
     LLM_TEMPERATURE: float = 0
     LLM_MAX_RETRIES: int = 2
 
@@ -38,10 +40,10 @@ class Settings:
 
     # Chunking Configuration
     # Options: "function" (P1), "ast" (P2), "context" (P3), "graph" (P4)
-    CHUNKING_STRATEGY: str = "graph"
+    CHUNKING_STRATEGY: str = "function"
     
     # Retrieval Mode: "vector" or "graph"
-    RETRIEVAL_MODE: str = "graph"
+    RETRIEVAL_MODE: str = "vector"
 
     # Recursive chunker settings
     CHUNK_SIZE: int = 1000
@@ -51,7 +53,7 @@ class Settings:
     SEMANTIC_BREAKPOINT_THRESHOLD: float = 0.5
 
     # Retrieval Configuration
-    RETRIEVAL_K: int = 2
+    RETRIEVAL_K: int = 5
 
     # Storage Configuration
     BASE_DIR: Path = Path(__file__).parent.parent.parent
@@ -70,6 +72,8 @@ class Settings:
         os.environ["NEO4J_URI"] = self.NEO4J_URI
         os.environ["NEO4J_USER"] = self.NEO4J_USER
         os.environ["NEO4J_PASSWORD"] = self.NEO4J_PASSWORD
+        
+        os.environ["OPENROUTER_API_KEY"] = self.OPENROUTER_API_KEY
 
 
 settings = Settings()

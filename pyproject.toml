@@ -8,6 +8,7 @@ dependencies = [
     "chromadb>=1.4.0",
     "fastapi>=0.115.0",
     "graph-rag-example-helpers>=0.8.0",
+    "httpx>=0.28.0",
     "langchain>=1.2.0",
     "langchain-astradb>=1.0.0",
     "langchain-chroma>=1.1.0",
@@ -21,4 +22,5 @@ dependencies = [
     "python-multipart>=0.0.9",
     "sentence-transformers>=5.2.0",
     "uvicorn>=0.32.0",
+    "matplotlib>=3.10.8",
 ]

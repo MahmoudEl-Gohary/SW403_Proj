@@ -18,14 +18,10 @@ def run_dev():
         shell=True
     )
 
-    # Get the root directory (where start.py is located)
-    root_dir = os.path.dirname(os.path.abspath(__file__))
-    frontend_dir = os.path.join(root_dir, "src", "frontend")
-
     # Start Frontend
     frontend_process = subprocess.Popen(
         ["npm", "run", "dev"],
-        cwd=frontend_dir,
+        cwd=os.path.join(os.getcwd(), "src", "frontend"),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,

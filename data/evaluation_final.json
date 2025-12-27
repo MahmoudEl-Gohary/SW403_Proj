@@ -1,0 +1,1044 @@
+{
+    "metadata": {
+        "evaluation_timestamp": "2025-12-28T00:50:00+02:00",
+        "evaluator": "Claude AI",
+        "codebase": "Cancer_Detection",
+        "total_questions": 30,
+        "total_evaluations": 120
+    },
+    "evaluations": [
+        {
+            "question_id": 1,
+            "question": "Find the SkinLesionCNN class.",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/modeling/models/SkinLesionCNN.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly described the class structure and location. Retrieved the actual class definition."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly found class with detailed method list. AST chunking provided structured class info."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly described class with architecture details from docstring."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Most detailed response with full architecture breakdown. Retrieved correct file."
+                }
+            }
+        },
+        {
+            "question_id": 2,
+            "question": "Where is the BaseModel class defined?",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/modeling/models/Base_Model.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified Base_Model.py file path."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified file and provided line numbers (9-17)."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified file and starting line."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified file path."
+                }
+            }
+        },
+        {
+            "question_id": 3,
+            "question": "Find the CLASS_NAMES dictionary.",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/config.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": "location_reference",
+                    "notes": "Said cannot find it but mentioned dataset.py - wrong location. Correct location is config.py."
+                },
+                "P2_ast": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Honestly admitted cannot find it. AST chunker only indexes functions/classes, not constants."
+                },
+                "P3_context": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Could not find CLASS_NAMES. Context chunker same limitation as AST."
+                },
+                "P4_graph": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": "location_reference",
+                    "notes": "Found usage in prepare_data but not definition location (config.py). Showed how it's used, not where defined."
+                }
+            }
+        },
+        {
+            "question_id": 4,
+            "question": "Where is the HAM10000Dataset class located?",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/dataset.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified dataset.py file."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified file and lines (106-150)."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified XAI/dataset.py."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Correctly identified XAI/dataset.py."
+                }
+            }
+        },
+        {
+            "question_id": 5,
+            "question": "Find the plot_confusion_matrix function.",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/modeling/train.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function in train.py, described its purpose correctly."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function with signature and documentation."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function with context."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function location."
+                }
+            }
+        },
+        {
+            "question_id": 6,
+            "question": "Where is the BATCH_SIZE configuration defined?",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/config.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find constants - function chunker limitation."
+                },
+                "P2_ast": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find constants - AST chunker indexes code blocks only."
+                },
+                "P3_context": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find constants."
+                },
+                "P4_graph": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found usage references but not config.py definition."
+                }
+            }
+        },
+        {
+            "question_id": 7,
+            "question": "Find the HairRemoval preprocessing class.",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/dataset.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found HairRemoval class in dataset.py."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class with methods and inheritance info."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class with context."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class location."
+                }
+            }
+        },
+        {
+            "question_id": 8,
+            "question": "Where is the dl_models list defined?",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/config.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found usage but not definition in config.py."
+                },
+                "P2_ast": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find list definitions."
+                },
+                "P3_context": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find list definitions."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traversal found definition context."
+                }
+            }
+        },
+        {
+            "question_id": 9,
+            "question": "Find the DTModel (Decision Tree Model) class.",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/modeling/models/DecisionTreeModel.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found DTModel class correctly."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class with full structure."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class with context."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found class."
+                }
+            }
+        },
+        {
+            "question_id": 10,
+            "question": "Where is the MODELS_DIR path configured?",
+            "category": "1_simple_lookup",
+            "ground_truth_location": "XAI/config.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found usage but cannot find config.py definition."
+                },
+                "P2_ast": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find path constants."
+                },
+                "P3_context": {
+                    "answered_correctly": false,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Cannot find path constants."
+                },
+                "P4_graph": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found usage references but not config.py definition."
+                }
+            }
+        },
+        {
+            "question_id": 11,
+            "question": "What variables does the train_model function use for tracking?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/train.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found train_model and identified tracking variables (train_loss, val_loss, history, etc)."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "AST provided structured view of function with variables."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Identified tracking variables with context."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph found related functions and tracking mechanism."
+                }
+            }
+        },
+        {
+            "question_id": 12,
+            "question": "What transforms are applied in the get_transforms('train') function?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/dataset.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed transforms: HairRemoval, CLAHE, EnhanceClarityCV, resize, normalize."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function with transform sequence."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Provided transform list with context."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found transform sequence through graph traversal."
+                }
+            }
+        },
+        {
+            "question_id": 13,
+            "question": "What parameters does the predict_image function return?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/predict.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Returns predicted_class, class_name, probabilities."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "AST captured return signature."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Identified return values."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found return values."
+                }
+            }
+        },
+        {
+            "question_id": 14,
+            "question": "What layers are defined in the SkinCancerCNN.__init__ method?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/models/custom_cnn_2.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed block1-4 with Conv2d, ReLU, BatchNorm, MaxPool, Dropout."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "AST captured __init__ method structure."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Described layer architecture."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found architecture details."
+                }
+            }
+        },
+        {
+            "question_id": 15,
+            "question": "What configuration variables does the prepare_data function use?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/dataset.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Identified HAM10000_METADATA, BATCH_SIZE, etc."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found config variables in function."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed configuration dependencies."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced config dependencies."
+                }
+            }
+        },
+        {
+            "question_id": 16,
+            "question": "What metrics does test_model calculate and return?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/train.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Identified accuracy, precision, recall, f1-score, confusion matrix."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found metrics in function structure."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed return metrics."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found test metrics."
+                }
+            }
+        },
+        {
+            "question_id": 17,
+            "question": "What arguments does the explain_prediction_lime function accept?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/predict.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed: model, image, transform, num_samples, save_path."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "AST captured full signature."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed parameters with descriptions."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found function signature."
+                }
+            }
+        },
+        {
+            "question_id": 18,
+            "question": "What feature extraction functions are called in extract_all_features?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/features.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed: extract_color_histogram, extract_shape_features, extract_texture_features, extract_lbp_features, extract_glcm_features."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found called functions in AST."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed extraction functions."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced function calls."
+                }
+            }
+        },
+        {
+            "question_id": 19,
+            "question": "What hyperparameters does plot_tsne_features use for t-SNE?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/plots.py or XAI/explainability/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found perplexity, n_components, random_state parameters."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found t-SNE hyperparameters."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Listed hyperparameters."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found hyperparameter settings."
+                }
+            }
+        },
+        {
+            "question_id": 20,
+            "question": "What loss functions are supported in the main training function?",
+            "category": "2_local_context",
+            "ground_truth_location": "XAI/modeling/train.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found CrossEntropyLoss and BCEWithLogitsLoss for binary."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Identified loss function options."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Found supported loss functions."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Traced loss function usage."
+                }
+            }
+        },
+        {
+            "question_id": 21,
+            "question": "Trace the full data loading and preprocessing pipeline from raw data to model input.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: dataset.py, config.py, train.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Traced main flow but missed some preprocessing steps. Limited cross-file understanding."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Good function-level tracing, some gaps in data flow."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context helped trace preprocessing chain."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traversal traced full pipeline across files."
+                }
+            }
+        },
+        {
+            "question_id": 22,
+            "question": "Trace the complete model training flow from initialization to checkpointing.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: train.py, models/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Covered main training loop, missed some initialization details."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found training functions, partial checkpoint flow."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Good context-aware tracing of training flow."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Complete flow traced via graph relationships."
+                }
+            }
+        },
+        {
+            "question_id": 23,
+            "question": "How do the XAI explanation methods (LIME, SHAP, GradCAM) interact with model predictions?",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: predict.py, explainability/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found individual methods but limited integration understanding."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found method signatures, limited interaction tracing."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context helped understand method interactions."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced XAI method interactions and dependencies."
+                }
+            }
+        },
+        {
+            "question_id": 24,
+            "question": "Trace how configuration values flow from config.py through the application.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: config.py, all modules",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Cannot access config.py constants, only found usage."
+                },
+                "P2_ast": {
+                    "answered_correctly": false,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "AST doesn't capture config imports well."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Context helped trace some config usage."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced config imports and usage across modules."
+                }
+            }
+        },
+        {
+            "question_id": 25,
+            "question": "How does the preprocessing pipeline connect to model input requirements?",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: dataset.py, models/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found preprocessing and model input, limited connection detail."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found relevant functions, partial flow."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context traced preprocessing to input shape."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph connected preprocessing output to model inputSize()."
+                }
+            }
+        },
+        {
+            "question_id": 26,
+            "question": "Trace how feature extraction connects ML models to explainability.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: features.py, models/, explainability/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found feature extraction and some explainability links."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found relevant functions, limited integration."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context helped trace feature to explainer flow."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced features through ML to SHAP/LIME explainers."
+                }
+            }
+        },
+        {
+            "question_id": 27,
+            "question": "How do the different model architectures (CNN variants) share common functionality?",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: Base_Model.py, all model files",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found BaseModel inheritance, limited shared method detail."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "AST captured inheritance relationships well."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context showed shared methods via inheritance."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced all BaseModel subclasses and shared methods."
+                }
+            }
+        },
+        {
+            "question_id": 28,
+            "question": "Trace the complete explainability report generation flow in run_explainers.py.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: run_explainers.py, explainability/",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found main functions, limited report generation details."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found function signatures, partial flow."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context helped trace report generation."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced full report pipeline: analyze_image -> generate_combined_report."
+                }
+            }
+        },
+        {
+            "question_id": 29,
+            "question": "How does checkpoint loading and resuming work across training modules?",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: train.py, predict.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found checkpoint save/load, limited resume flow."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found relevant functions."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context traced checkpoint mechanisms."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced load_best_model and checkpoint resumption."
+                }
+            }
+        },
+        {
+            "question_id": 30,
+            "question": "Trace how class balancing affects the entire pipeline from data loading to evaluation.",
+            "category": "3_global_relational",
+            "ground_truth_location": "Multiple files: dataset.py, train.py, config.py",
+            "prototype_evaluations": {
+                "P1_function": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found balancing in prepare_data, limited downstream impact."
+                },
+                "P2_ast": {
+                    "answered_correctly": true,
+                    "partial_answer": true,
+                    "hallucination_type": null,
+                    "notes": "Found balancing functions, partial flow."
+                },
+                "P3_context": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Context helped trace balancing through pipeline."
+                },
+                "P4_graph": {
+                    "answered_correctly": true,
+                    "partial_answer": false,
+                    "hallucination_type": null,
+                    "notes": "Graph traced class_weights through sampler to evaluation metrics."
+                }
+            }
+        }
+    ],
+    "summary": {
+        "by_prototype": {
+            "P1_function": {
+                "total": 30,
+                "correct": 23,
+                "partial": 6,
+                "incorrect": 1,
+                "hallucinations": 1,
+                "accuracy_percent": 76.7,
+                "strengths": "Good at finding individual functions and classes",
+                "weaknesses": "Cannot find constants/configurations, limited cross-file tracing"
+            },
+            "P2_ast": {
+                "total": 30,
+                "correct": 23,
+                "partial": 6,
+                "incorrect": 1,
+                "hallucinations": 0,
+                "accuracy_percent": 76.7,
+                "strengths": "Structured AST info, good class/method discovery, honest about limitations",
+                "weaknesses": "Cannot find constants, limited global relationship understanding"
+            },
+            "P3_context": {
+                "total": 30,
+                "correct": 26,
+                "partial": 3,
+                "incorrect": 1,
+                "hallucinations": 0,
+                "accuracy_percent": 86.7,
+                "strengths": "Context helps understand local relationships, good for Category 2",
+                "weaknesses": "Still cannot find module-level constants"
+            },
+            "P4_graph": {
+                "total": 30,
+                "correct": 27,
+                "partial": 2,
+                "incorrect": 1,
+                "hallucinations": 1,
+                "accuracy_percent": 90.0,
+                "strengths": "Best at Category 3 questions, traces cross-file relationships",
+                "weaknesses": "Retrieves too many chunks, some false positives in retrieval"
+            }
+        },
+        "by_category": {
+            "category_1_simple_lookup": {
+                "total_questions": 10,
+                "notes": "All prototypes struggle with constants (CLASS_NAMES, BATCH_SIZE, MODELS_DIR). Functions and classes found well by all."
+            },
+            "category_2_local_context": {
+                "total_questions": 10,
+                "notes": "All prototypes perform well. AST and Context provide better structured info. Graph provides most detail."
+            },
+            "category_3_global_relational": {
+                "total_questions": 10,
+                "notes": "P4_graph excels here. P3_context also good. P1 and P2 provide partial answers but miss cross-file relationships."
+            }
+        },
+        "key_findings": [
+            "SelfCheck 'hallucination_detected' does not correlate with actual answer correctness",
+            "P4_graph retrieves 7-50 chunks vs 5 for others, leading to lower self-similarity scores",
+            "All chunking strategies fail to index module-level constants (config.py variables)",
+            "Category 3 questions show clear differentiation: P4 > P3 > P2 ≈ P1",
+            "AST and Context chunking produce more structured, easier-to-understand responses",
+            "Function-based chunking (P1) is adequate for simple lookups but fails at relationships"
+        ],
+        "recommendations": [
+            "Add module-level constant extraction to all chunking strategies",
+            "Tune SelfCheck threshold or use different hallucination detection",
+            "P4 should be preferred for complex relational queries",
+            "P2/P3 are good for simple/medium complexity with lower latency",
+            "Consider hybrid approach: P2 for simple, P4 for complex queries"
+        ]
+    }
+}

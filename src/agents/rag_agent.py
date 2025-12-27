@@ -11,13 +11,15 @@ from langchain_openai import ChatOpenAI
 
 
 
-def get_llm() -> ChatOpenAI:
+def get_llm(temp: float | None = None) -> ChatOpenAI:
     """Initialize the LLM."""
+    temperature = temp if temp is not None else settings.LLM_TEMPERATURE
+    
     return ChatOpenAI(
         api_key=settings.OPENROUTER_API_KEY,
         base_url="https://openrouter.ai/api/v1",
         model=settings.LLM_MODEL,
-        temperature=temp,
+        temperature=temperature,
         max_tokens=None,
         timeout=None,
         max_retries=settings.LLM_MAX_RETRIES,

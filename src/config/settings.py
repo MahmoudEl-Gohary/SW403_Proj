@@ -70,10 +70,6 @@ class Settings:
         os.environ["ASTRA_DB_APPLICATION_TOKEN"] = self.ASTRA_DB_APPLICATION_TOKEN
         os.environ["ASTRA_DB_API_ENDPOINT"] = self.ASTRA_DB_API_ENDPOINT
         
-        os.environ["NEO4J_URI"] = self.NEO4J_URI
-        os.environ["NEO4J_USER"] = self.NEO4J_USER
-        os.environ["NEO4J_PASSWORD"] = self.NEO4J_PASSWORD
-        
         os.environ["OPENROUTER_API_KEY"] = self.OPENROUTER_API_KEY
 
 

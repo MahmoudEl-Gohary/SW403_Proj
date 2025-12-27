@@ -27,6 +27,7 @@ class RetrievalPipeline:
         self.embeddings = HuggingFaceEmbeddings(
             model_name=settings.EMBEDDING_MODEL
         )
+        
         # Create a safe collection name based on source dir, strategy and model
         model_slug = settings.LLM_MODEL.split("/")[-1].replace("-", "_").replace(".", "_")
         if source_dir:

@@ -71,6 +71,61 @@ python start.py
 4. Once the answer is generated, click the **"Self Check"** (Shield icon) button.
 5. The system will generate a secondary "sampled" response internally and show you a **Similarity Score**. If the score is low (<= 50%), it will flag a potential hallucination.
 
-## P4 (GraphRAG)
+## Evaluation Framework
 
-The next phase of development (P4) will introduce Knowledge Graph integration to improve retrieval for complex, cross-module relationship queries.
+This project includes an automated evaluation framework to test the four RAG prototypes (P1-P4) against 30 categorized questions.
+
+### RAG Prototypes
+
+| Prototype | Strategy | Description |
+|-----------|----------|-------------|
+| **P1** | `function` | Baseline function-level chunking |
+| **P2** | `ast` | AST-aware code structure chunking |
+| **P3** | `context` | Context-enriched AST chunking |
+| **P4** | `graph` | GraphRAG with knowledge graph traversal |
+
+### Running the Evaluation
+
+1. **Start the API server**:
+
+   ```powershell
+   uv run uvicorn src.api.main:app --reload
+   ```
+
+2. **Run the evaluation** (in a new terminal):
+
+   ```powershell
+   uv run python scripts/run_evaluation.py --zip data/Cancer_Detection.zip
+   ```
+
+   **Options:**
+   - `--zip PATH` - Path to codebase zip file (default: `data/Cancer_Detection.zip`)
+   - `--output PATH` - Output JSON path (default: `data/evaluation_results_raw.json`)
+   - `--strategies STRATS` - Comma-separated strategies (e.g., `context,graph`)
+   - `--skip-indexing` - Reuse existing indexed collections
+
+3. **Generate visualization charts**:
+
+   ```powershell
+   uv run python scripts/generate_charts.py
+   ```
+
+   Charts are saved to `data/charts/`.
+
+### Evaluation Output
+
+- `data/evaluation_results_raw.json` - Raw LLM responses, latency, selfcheck scores
+- `data/evaluation_final.json` - Manual correctness assessments and hallucination classifications
+- `data/charts/` - Visualization charts (accuracy, latency, consistency)
+
+### Question Categories
+
+| Category | Questions | Description |
+|----------|-----------|-------------|
+| **1. Simple Lookup** | Q1-Q10 | Find class/function locations |
+| **2. Local Context** | Q11-Q20 | Parameters, variables, dependencies |
+| **3. Global Relational** | Q21-Q30 | Cross-file tracing, architecture |
+
+### Expected Results
+
+Based on evaluation, P4 (GraphRAG) outperforms other strategies on Category 3 (global/relational) questions, while P2/P3 provide faster responses for simple lookups.
